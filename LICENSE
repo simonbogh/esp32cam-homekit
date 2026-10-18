@@ -19,7 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Third-party code in lib/ keeps its own license:
-  lib/HomeSpan  - HomeSpan 2.1.8, MIT License, Copyright (c) 2020-2025 Gregg E. Berman (lib/HomeSpan/LICENSE)
-  lib/minih264  - minih264e, CC0-1.0 public domain dedication (lib/minih264/LICENSE)

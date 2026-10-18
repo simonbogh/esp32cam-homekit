@@ -1,0 +1,8 @@
+{
+  "name": "minih264",
+  "version": "0.0.0+master",
+  "description": "lieff/minih264 single-header H.264 encoder (CC0), plain-C build for ESP32",
+  "license": "CC0-1.0",
+  "repository": { "type": "git", "url": "https://github.com/lieff/minih264" },
+  "build": { "flags": ["-O2", "-Wno-unused-function", "-Wno-unused-variable", "-Wno-unused-but-set-variable"] }
+}

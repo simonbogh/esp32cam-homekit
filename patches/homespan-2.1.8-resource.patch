@@ -1,0 +1,28 @@
+--- a/src/HAP.cpp
++++ b/src/HAP.cpp
+@@ -33,6 +33,9 @@
+ 
+ #include "HAP.h"
+ 
++// LOCAL PATCH (pio_esp32_cam): optional handler for HAP camera snapshots (POST /resource)
++int hs_resource_handler(HAPClient *hc, const char *json, size_t len) __attribute__((weak));
++
+ //////////////////////////////////////
+ 
+ void HAPClient::init(){
+@@ -190,6 +193,15 @@
+             
+     else if(!strncmp(body,"POST /pairings ",15) && strstr(body,"Content-Type: application/pairing+tlv8"))              // POST PAIRINGS                
+       postPairingsURL(content,cLen);
++
++    else if(!strncmp(body,"POST /resource ",15)){                                                                      // POST RESOURCE (LOCAL PATCH)
++      if(!cPair)
++        unauthorizedError();
++      else if(hs_resource_handler)
++        hs_resource_handler(this,(const char *)content,cLen);
++      else
++        notFoundError();
++    }
+ 
+     else {
+       notFoundError();

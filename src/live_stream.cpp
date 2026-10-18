@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Simon Bøgh
+
 #include "live_stream.h"
 
 #include <Preferences.h>

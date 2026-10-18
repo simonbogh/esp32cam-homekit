@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Simon Bøgh
+
 // HomeKit camera accessory on top of HomeSpan.
 // HomeSpan has no camera service, so the HAP Camera RTP Stream Management service (UUID 110)
 // and its TLV8 characteristics are declared here as custom types with Apple's short UUIDs.

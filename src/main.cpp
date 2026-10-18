@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Simon Bøgh
+
 // AI-Thinker ESP32-CAM -> Apple Home, native HomeKit (HomeSpan), no bridge.
 // HomeKit: camera tile with JPEG snapshots + motion sensor. Live view in a browser: MJPEG on :82/stream.
 

@@ -224,7 +224,7 @@ tools/               HomeSpan vendoring, XCLK benchmark, HAP test client
 
 ## License
 
-The project code is under the [MIT License](LICENSE). Bundled third-party code keeps its own license:
+The project code is © 2026 Simon Bøgh and released under the [MIT License](LICENSE). Bundled third-party code keeps its own license:
 
 * `lib/HomeSpan`: [HomeSpan](https://github.com/HomeSpan/HomeSpan) 2.1.8, MIT, © Gregg E. Berman.
   Locally patched (`patches/homespan-2.1.8-resource.patch`).

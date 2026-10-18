@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Simon Bøgh
 """HomeKit (HAP) test client for the ESP32-CAM accessory, without an iPhone.
 
 Needs a venv with aiohomekit (>= 4.0):  python3 -m venv .venv && .venv/bin/pip install aiohomekit

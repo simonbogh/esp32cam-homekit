@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Simon Bøgh
 """Benchmark camera XCLK settings: capture FPS, MJPEG FPS delivered over Wi-Fi, RSSI.
 
 Usage: python3 tools/xclk_bench.py [host] [seconds-per-setting] [mhz-list]

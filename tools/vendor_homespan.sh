@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Simon Bøgh
 # Re-creates lib/HomeSpan from upstream HomeSpan (pinned tag) and applies the local patch
 # that adds the HAP "POST /resource" route needed for HomeKit camera snapshots.
 set -euo pipefail

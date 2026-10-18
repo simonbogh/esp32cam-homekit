@@ -75,7 +75,9 @@ because it holds the port.
 2. On the iPhone (same Wi-Fi), open **Home** and tap **+**, then **Add Accessory**.
 3. Tap **More options…** and pick **ESP32 Cam**.
 4. Apple warns that this is an **Uncertified Accessory**. Tap **Add Anyway**.
-5. Enter the setup code. The default is **`204-02-210`** (`HK_PAIRING_CODE` in `include/secrets.h`).
+5. Enter the 8-digit setup code. The example default is **2040-2210**, the digits `20402210` from
+   `HK_PAIRING_CODE` in `include/secrets.h`. Choose your own code there. Older iOS versions group the digits
+   as 204-02-210.
 6. Assign a room. The accessory appears as a **camera** tile, with a linked **motion sensor**.
 7. Optional: in the camera's settings, turn on motion **notifications**. They include a snapshot.
 
@@ -159,7 +161,7 @@ Robustness checks:
   returns to VGA.
 * SRTP/SRTCP from the ESP32 is decrypted and authenticated by libsrtp (`pylibsrtp`) with zero failures.
 
-**On an iPhone (Home app, kitchen HomePod as hub):**
+**On an iPhone (Home app, with a HomePod as the home hub):**
 * Live view (160×120 profile) started in about 1 s.
 * It ran at 15.0 fps and 268–286 kbit/s with zero send errors, and iOS sent RTCP receiver reports
   continuously.
@@ -170,7 +172,7 @@ Robustness checks:
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install aiohomekit pylibsrtp
-.venv/bin/python tools/hk_test.py -f pairing.json pair <id from dns-sd> 204-02-210
+.venv/bin/python tools/hk_test.py -f pairing.json pair <id from dns-sd> 204-02-210   # aiohomekit wants XXX-XX-XXX
 .venv/bin/python tools/hk_test.py -f pairing.json check          # camera TLVs + SetupEndpoints
 .venv/bin/python tools/hk_test.py -f pairing.json snapshot a.jpg
 .venv/bin/python tools/hk_test.py -f pairing.json stream a.h264 15 # acts like iOS, checks with ffprobe
@@ -191,6 +193,15 @@ src/web.*            esp_http_server: UI/stats/control on :81, MJPEG on :82
 tools/               HomeSpan vendoring, XCLK benchmark, HAP test client
 ```
 
+## Security notes
+
+* All HomeKit traffic (pairing, snapshots, live video) is encrypted end to end, using HAP sessions and SRTP.
+* The browser UI, MJPEG stream and `/control` (ports 81 and 82) have **no authentication**. Anyone on the same
+  network can watch the camera and change its settings. Keep the camera on a trusted network or a separate
+  IoT VLAN, and never forward these ports to the internet.
+* Set your own 8-digit `HK_PAIRING_CODE` in `include/secrets.h`. That file is git-ignored, like your Wi-Fi
+  credentials.
+
 ## Known limitations
 
 * Live video trades resolution for frame rate because the ESP32-S encodes H.264 in software: 320×240 at
@@ -201,3 +212,15 @@ tools/               HomeSpan vendoring, XCLK benchmark, HAP test client
 * During a live session, snapshots and the MJPEG page show the smaller streaming resolution.
 * HomeSpan prints a harmless `WARNING: Attempt to set value of Characteristic::SetupEndpoints within
   update()` for each live session (HAP's write-then-read pattern).
+
+## License
+
+The project code is under the [MIT License](LICENSE). Bundled third-party code keeps its own license:
+
+* `lib/HomeSpan`: [HomeSpan](https://github.com/HomeSpan/HomeSpan) 2.1.8, MIT, © Gregg E. Berman.
+  Locally patched (`patches/homespan-2.1.8-resource.patch`).
+* `lib/minih264`: [minih264e](https://github.com/lieff/minih264), CC0-1.0. Locally patched
+  (`patches/minih264-esp32.patch`).
+
+Apple, Apple Home and HomeKit are trademarks of Apple Inc. This project is not affiliated with, endorsed by
+or certified by Apple. The Home app lists it as an uncertified accessory.

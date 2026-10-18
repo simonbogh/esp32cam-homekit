@@ -84,8 +84,7 @@ void setup() {
   new SpanUserCommand('b', "- benchmark JPEG -> H.264 encoding", cmdBench);
   new SpanUserCommand('p', "<n> - HomeKit live profile: 0=160x120 1=240x176 2=320x240 3=480x320 4=640x480", cmdProfile);
 
-  Serial.printf("[boot] HomeKit setup code: %.3s-%.2s-%.3s\n", HK_PAIRING_CODE, HK_PAIRING_CODE + 3,
-                HK_PAIRING_CODE + 5);
+  Serial.printf("[boot] HomeKit setup code: %.4s-%.4s\n", HK_PAIRING_CODE, HK_PAIRING_CODE + 4);
 }
 
 void loop() {

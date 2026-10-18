@@ -1,6 +1,10 @@
 # ESP32-CAM → Apple Home (native HomeKit, no bridge)
 
 <p align="center">
+  <img src="docs/images/apple-home-badge.svg" height="28" alt="Apple Home: native HomeKit camera">
+</p>
+
+<p align="center">
   <img src="docs/images/esp32cam-on-mb.jpg" height="300"
        alt="AI-Thinker ESP32-CAM with OV2640 camera plugged into the ESP32-CAM-MB USB programmer">
   <img src="docs/images/esp32cam-and-mb.jpg" height="300"

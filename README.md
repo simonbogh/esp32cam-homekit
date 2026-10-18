@@ -1,5 +1,12 @@
 # ESP32-CAM → Apple Home (native HomeKit, no bridge)
 
+<p align="center">
+  <img src="docs/images/esp32cam-on-mb.jpg" height="300"
+       alt="AI-Thinker ESP32-CAM with OV2640 camera plugged into the ESP32-CAM-MB USB programmer">
+  <img src="docs/images/esp32cam-and-mb.jpg" height="300"
+       alt="ESP32-CAM-MB programmer board with IO0 and RST buttons (left) next to the AI-Thinker ESP32-CAM (right)">
+</p>
+
 PlatformIO / Arduino firmware for the **AI-Thinker ESP32-CAM** (ESP32-S, 4 MB PSRAM, OV2640) that pairs
 **directly** with Apple Home. There is no Home Assistant, Homebridge, Scrypted or any other bridge.
 
@@ -48,8 +55,8 @@ cp include/secrets.h.example include/secrets.h   # Wi-Fi SSID/password (2.4 GHz)
 flash mode by hand:
 
 1. Start the upload.
-2. Hold **IO0** on the MB board, press and release **RST** on the camera board, then hold IO0 for about one
-   more second and release it.
+2. Hold **IO0**, press and release **RST**, then hold IO0 for about one more second and release it. Both
+   buttons are on the MB board, on either side of the USB port (see the photo above).
 3. When flashing is done, press **RST** to boot.
 
 If the port shows no data at all, unplug and replug the USB cable. Close the Arduino IDE serial monitor too,

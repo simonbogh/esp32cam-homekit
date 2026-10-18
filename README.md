@@ -49,11 +49,21 @@ What you get in the Home app:
 ## Build & flash
 
 ```bash
-cp include/secrets.h.example include/secrets.h   # Wi-Fi SSID/password (2.4 GHz) + HomeKit code
+cp include/secrets.h.example include/secrets.h   # optional: bake in Wi-Fi SSID/password (2.4 GHz) + HomeKit code
 ~/.platformio/penv/bin/pio run                    # build
 ~/.platformio/penv/bin/pio run -t upload          # flash (see below if it can't connect)
 ~/.platformio/penv/bin/pio device monitor         # serial log, 115200
 ```
+
+**Without `include/secrets.h`**, nothing is baked in, and the camera sets itself up on first boot:
+
+1. It opens a setup Wi-Fi network, **HomeSpan-Setup** (password `homespan`).
+2. Join it with your phone. In the page that opens, choose your 2.4 GHz Wi-Fi and an 8-digit HomeKit setup
+   code.
+3. The camera reboots onto your network, ready to pair.
+
+Instead of the setup network, you can type `W` in the serial monitor to enter Wi-Fi, and `S 12345678` to set
+the setup code. Both are kept in flash.
 
 **Upload on this board.** The ESP32-CAM-MB's auto-reset does not work with this adapter on macOS, so enter
 flash mode by hand:
@@ -75,9 +85,8 @@ because it holds the port.
 2. On the iPhone (same Wi-Fi), open **Home** and tap **+**, then **Add Accessory**.
 3. Tap **More options…** and pick **ESP32 Cam**.
 4. Apple warns that this is an **Uncertified Accessory**. Tap **Add Anyway**.
-5. Enter the 8-digit setup code. The example default is **2040-2210**, the digits `20402210` from
-   `HK_PAIRING_CODE` in `include/secrets.h`. Choose your own code there. Older iOS versions group the digits
-   as 204-02-210.
+5. Enter your 8-digit setup code: the one chosen in the setup network, or `HK_PAIRING_CODE` from
+   `include/secrets.h` (the example is **2040-2210**). Older iOS versions group the digits as 204-02-210.
 6. Assign a room. The accessory appears as a **camera** tile, with a linked **motion sensor**.
 7. Optional: in the camera's settings, turn on motion **notifications**. They include a snapshot.
 

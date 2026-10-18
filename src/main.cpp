@@ -13,7 +13,11 @@
 #include "hk_camera.h"
 #include "live_stream.h"
 #include "motion.h"
+// Optional: Wi-Fi + HomeKit setup code baked in from include/secrets.h. Without it the firmware uses
+// HomeSpan's setup instead (setup access point, or serial 'W' / 'S').
+#if __has_include("secrets.h")
 #include "secrets.h"
+#endif
 #include "web.h"
 
 static bool cameraOk = false;
@@ -69,8 +73,15 @@ void setup() {
   cameraOk = Camera::begin();
   if (cameraOk) Motion::begin();
 
-  homeSpan.setWifiCredentials(WIFI_SSID, WIFI_PASS)
-      .setPairingCode(HK_PAIRING_CODE)
+#ifdef WIFI_SSID
+  homeSpan.setWifiCredentials(WIFI_SSID, WIFI_PASS);
+#endif
+#ifdef HK_PAIRING_CODE
+  homeSpan.setPairingCode(HK_PAIRING_CODE);
+#endif
+  // Without stored Wi-Fi credentials HomeSpan opens the "HomeSpan-Setup" access point (password "homespan")
+  // where Wi-Fi and the HomeKit setup code are entered; both are then kept in NVS.
+  homeSpan.enableAutoStartAP()
       .setHostNameSuffix("")
       .setWifiBegin(wifiBegin)
       .setConnectionCallback(onConnected)
@@ -84,7 +95,11 @@ void setup() {
   new SpanUserCommand('b', "- benchmark JPEG -> H.264 encoding", cmdBench);
   new SpanUserCommand('p', "<n> - HomeKit live profile: 0=160x120 1=240x176 2=320x240 3=480x320 4=640x480", cmdProfile);
 
+#ifdef HK_PAIRING_CODE
   Serial.printf("[boot] HomeKit setup code: %.4s-%.4s\n", HK_PAIRING_CODE, HK_PAIRING_CODE + 4);
+#else
+  Serial.println("[boot] HomeKit setup code: the one chosen in the setup access point or with 'S <8 digits>'");
+#endif
 }
 
 void loop() {
